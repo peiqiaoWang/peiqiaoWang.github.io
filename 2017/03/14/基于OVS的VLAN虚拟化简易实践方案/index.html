@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>基于OVS的VLAN虚拟化简易实践方案 | 考拉小无</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="考拉小无">
+    <meta name="author" content="John Doe">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="考拉小无" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">SDN</a></li>
+                    
+                        <li><a href="/tags/PHP/index.html" target="_BLANK" class="animsition-link">PHP</a></li>
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">Python</a></li>
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">生活简章</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">主题来源Kieran</a></li>
+                    
+                    <li><a href="http://www.cnblogs.com/wpqwpq" class="animsition-link">考拉小无</a></li>
+                    
+                    <li><a href="https://csming1995.github.io" class="animsition-link">csming1995</a></li>
+                    
+                    <li><a href="https://Wasdns.github.io" class="animsition-link">Wasdns</a></li>
+                    
+                    <li><a href="http://www.cnblogs.com/qq952693358/" class="animsition-link">cnblog Wasdns</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">考拉小无</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/peiqiaoWang" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/1659192742/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2017-03-14T12:15:02.000Z" itemprop="datePublished">
+          2017-03-14
+      </time>
+    
+    
+    | 
+    <a href='/tags/SDN/'>SDN</a>
+    
+    
+</span>
+                <h1>基于OVS的VLAN虚拟化简易实践方案</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本实验基于ovs的vlan流表匹配，根据端口进行vlan标签插入。<strong>手工</strong>配置ovs，使其具有vlan虚拟化方案。</p>
+<h2 id="实验拓扑"><a href="#实验拓扑" class="headerlink" title="实验拓扑"></a>实验拓扑</h2><p><img src="https://raw.githubusercontent.com/peiqiaoWang/peiqiaoWang.github.io/master/attrach/%E5%9F%BA%E4%BA%8EOVS%E7%9A%84VLAN%E8%99%9A%E6%8B%9F%E5%8C%96%E7%AE%80%E6%98%93%E5%AE%9E%E8%B7%B5%E6%96%B9%E6%A1%88/topo.png" alt="topo"></p>
+<h2 id="实验目标"><a href="#实验目标" class="headerlink" title="实验目标"></a>实验目标</h2><p>在给定实验拓扑情况下，用vlan得到下列虚拟网段</p>
+<ul>
+<li>h1–h4为一个vlan_id 0 网段</li>
+<li>h2–h5为一个vlan_id 1 网段</li>
+<li>h3–h6为一个vlan_id 2 网段</li>
+</ul>
+<h2 id="实验工具"><a href="#实验工具" class="headerlink" title="实验工具"></a>实验工具</h2><ul>
+<li>mininet</li>
+<li>控制器RYU</li>
+<li>OVS</li>
+</ul>
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><p><strong>实验拓扑的搭建</strong></p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><div class="line">from mininet.topo import Topo</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span>(<span class="title">Topo</span>):</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>)</span></span>:</div><div class="line"></div><div class="line">        <span class="comment"># initilaize topology</span></div><div class="line">        Topo.__init_<span class="number">_</span>(<span class="keyword">self</span>)</div><div class="line"></div><div class="line">        <span class="comment"># add hosts and switches</span></div><div class="line">        host1 = <span class="keyword">self</span>.addHost(<span class="string">'h1'</span>)</div><div class="line">        host2 = <span class="keyword">self</span>.addHost(<span class="string">'h2'</span>)</div><div class="line">        host3 = <span class="keyword">self</span>.addHost(<span class="string">'h3'</span>)</div><div class="line">        host4 = <span class="keyword">self</span>.addHost(<span class="string">'h4'</span>)</div><div class="line">        host5 = <span class="keyword">self</span>.addHost(<span class="string">'h5'</span>)</div><div class="line">        host6 = <span class="keyword">self</span>.addHost(<span class="string">'h6'</span>)</div><div class="line"></div><div class="line">        switch1 = <span class="keyword">self</span>.addSwitch(<span class="string">'s1'</span>)</div><div class="line">        switch2 = <span class="keyword">self</span>.addSwitch(<span class="string">'s2'</span>)</div><div class="line">        <span class="comment"># add links</span></div><div class="line">        <span class="keyword">self</span>.addLink(host1, switch1, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">        <span class="keyword">self</span>.addLink(host2, switch1, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">        <span class="keyword">self</span>.addLink(host3, switch1, <span class="number">1</span>, <span class="number">3</span>)</div><div class="line">        <span class="keyword">self</span>.addLink(switch1, switch2, <span class="number">4</span>, <span class="number">4</span>)</div><div class="line">        <span class="keyword">self</span>.addLink(host4, switch2, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">        <span class="keyword">self</span>.addLink(host5, switch2, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">        <span class="keyword">self</span>.addLink(host6, switch2, <span class="number">1</span>, <span class="number">3</span>)</div><div class="line"></div><div class="line">topos = &#123;<span class="string">'mytopo'</span>: (<span class="symbol">lambda:</span> MyTopo())&#125;</div></pre></td></tr></table></figure>
+<p><strong>mininet的启用</strong></p>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><div class="line"><span class="comment">sudo</span> <span class="comment">mn</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">custom</span> <span class="comment">your_topo</span><span class="string">.</span><span class="comment">py</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">topo</span> <span class="comment">mytopo</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">mac</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">switch</span> <span class="comment">ovsk</span><span class="string">,</span><span class="comment">protocols=OpenFlow13</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">controller</span> <span class="comment">remote</span></div></pre></td></tr></table></figure>
+<p><strong>ryu收集数据包的应用及启动</strong>(可以帮忙做debug)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#-*- coding: UTF-8 -*-</span></div><div class="line"><span class="keyword">from</span> ryu.base <span class="keyword">import</span> app_manager</div><div class="line"><span class="keyword">from</span> ryu.controller <span class="keyword">import</span> ofp_event</div><div class="line"><span class="keyword">from</span> ryu.controller.handler <span class="keyword">import</span> CONFIG_DISPATCHER, MAIN_DISPATCHER</div><div class="line"><span class="keyword">from</span> ryu.controller.handler <span class="keyword">import</span> set_ev_cls</div><div class="line"><span class="keyword">from</span> ryu.ofproto <span class="keyword">import</span> ofproto_v1_3</div><div class="line"><span class="keyword">from</span> ryu.lib.packet <span class="keyword">import</span> packet</div><div class="line"><span class="keyword">from</span> ryu.lib.packet <span class="keyword">import</span> ethernet</div><div class="line"><span class="keyword">from</span> ryu.lib.packet <span class="keyword">import</span> ether_types</div><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PeiQiaoWang_controller</span><span class="params">(app_manager.RyuApp)</span>:</span></div><div class="line">    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">        super(PeiQiaoWang_controller, self).__init__(*args, **kwargs)</div><div class="line"></div><div class="line"><span class="meta">    @set_ev_cls(ofp_event.EventOFPFeaturesRequest)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">switch_features_handle</span><span class="params">(self, ev)</span>:</span></div><div class="line">        logging.debug(<span class="string">"ing"</span>)</div><div class="line">        msg = ev.msg</div><div class="line">        datapath = msg.datapath</div><div class="line">        ofproto = datapath.ofproto</div><div class="line">        parser = datapath.ofproto_parser</div><div class="line">        <span class="keyword">print</span> msg, datapath, ofproto, parser</div><div class="line"></div><div class="line">    <span class="comment">#handshake系列</span></div><div class="line"></div><div class="line">    <span class="comment">#OFPFeaturesRequest_由控制器发送</span></div><div class="line"></div><div class="line">    <span class="comment">#OFPSwitchFeatures</span></div><div class="line"><span class="meta">    @set_ev_cls(ofp_event.EventOFPSwitchFeatures)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">switch_switch_feature_handle</span><span class="params">(self, ev)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"go"</span></div><div class="line">        msg = ev.msg</div><div class="line">        datapath = msg.datapath</div><div class="line">        ofproto = datapath.ofproto</div><div class="line">        parser = datapath.ofproto_parser</div><div class="line">        <span class="keyword">print</span> <span class="string">"msg="</span>, msg</div><div class="line">        <span class="comment"># print "msg.datapath_id=", msg.datapath_id</span></div><div class="line">        <span class="comment"># print "datapath=", datapath</span></div><div class="line">        <span class="comment"># print "ofproto=", ofproto</span></div><div class="line">        <span class="comment"># print "parser=", parser</span></div><div class="line"></div><div class="line">    <span class="comment">#Switch Configuration系列</span></div><div class="line"></div><div class="line">    <span class="comment">#OFPSetConfig</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">packet_in_handle</span><span class="params">(self, ev)</span>:</span></div><div class="line">        logging.info(<span class="string">"packetin"</span>)</div><div class="line">        msg = ev.msg</div><div class="line">        <span class="keyword">print</span> ev.msg</div><div class="line">        in_port = msg.match[<span class="string">'in_port'</span>]</div><div class="line">        pkt = packet.Packet(msg.data)</div><div class="line">        <span class="keyword">print</span> pkt.protocols</div><div class="line">        <span class="keyword">print</span> type(pkt.protocols)</div><div class="line">        <span class="comment"># print pkt.data</span></div><div class="line">        <span class="comment"># print type(pkt.data)</span></div><div class="line">        <span class="comment"># print pkt.ethernet.dst_ip</span></div><div class="line">        <span class="keyword">print</span> type(pkt[<span class="number">1</span>])</div></pre></td></tr></table></figure>
+<p>启动：</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">ryu-manage <span class="comment">--obeserve-links ./your_app.py</span></div></pre></td></tr></table></figure>
+<p><strong>OVS流表手动下发</strong></p>
+<p>s1:</p>
+<figure class="highlight smali"><table><tr><td class="code"><pre><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=1,in_port=1,actions=push_vlan:0x8100,set_field:4096-\&gt;vlan_vid,output:4</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=1,in_port=2,actions=push_vlan:0x8100,set_field:4097-\&gt;vlan_vid,output:4</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=1,in_port=3,actions=push_vlan:0x8100,set_field:4098-\&gt;vlan_vid,output:4</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=1,dl_vlan=0,actions=pop_vlan,output:1</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=1,dl_vlan=1,actions=pop_vlan,output:2</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=1,dl_vlan=2,actions=pop_vlan,output:3</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s1 priority=0,actions=output:controller</div></pre></td></tr></table></figure>
+<p>s2:</p>
+<figure class="highlight smali"><table><tr><td class="code"><pre><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=1,in_port=1,actions=push_vlan:0x8100,set_field:4096-\&gt;vlan_vid,output:4</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=1,in_port=2,actions=push_vlan:0x8100,set_field:4097-\&gt;vlan_vid,output:4</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=1,in_port=3,actions=push_vlan:0x8100,set_field:4098-\&gt;vlan_vid,output:4</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=1,dl_vlan=0,actions=pop_vlan,output:1</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=1,dl_vlan=1,actions=pop_vlan,output:2</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=1,dl_vlan=2,actions=pop_vlan,output:3</div><div class="line">sudo ovs-ofctl -O OpenFlow13<span class="built_in"> add-flow </span>s2 priority=0,actions=output:controller</div></pre></td></tr></table></figure>
+<p>tip:</p>
+<p>上述流表有一个较坑的地方，就是下发添加vlan标签的地方。我们可以看一下vlan标签的构造：</p>
+<p> <img src="https://raw.githubusercontent.com/peiqiaoWang/peiqiaoWang.github.io/master/attrach/基于OVS的VLAN虚拟化简易实践方案/vlan.jpg" alt="vlan"></p>
+<p>而我们的下发的流表</p>
+<p><code>sudo ovs-ofctl -O OpenFlow13 add-flow s2 priority=1,in_port=1,actions=push_vlan:0x8100,set_field:4096-\&gt;vlan_vid,output:4</code>中<code>set_field</code>确是指定的4096</p>
+<p>原因：其实这里的<code>set_field</code>的值是设置TCI的值，并不是VLAN ID的值，4096其实它的VLAN ID就为0，其中CFI位要置位1，这是由于OVS规定该位一定要为1，而OpenFlow标准并没有指示，其为一个保留字段，但是也有很多OpenFlow交换机指定了该位一定要为1才能生效。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>可观察得mininet中的<code>pingall</code>情况</p>
+<p><img src="https://raw.githubusercontent.com/peiqiaoWang/peiqiaoWang.github.io/master/attrach/基于OVS的VLAN虚拟化简易实践方案/mininet_pingall.png" alt="mininet_pingall"></p>
+<p>ryu中收到的未匹配的包情况</p>
+<p><img src="https://raw.githubusercontent.com/peiqiaoWang/peiqiaoWang.github.io/master/attrach/基于OVS的VLAN虚拟化简易实践方案/ryu_packet.png" alt="ryu_packet"></p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>感受到了普通网工，一台台机器配置过去的麻烦。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2017/03/15/基于RYU restful api实现的VLAN网络虚拟化/" style="float: left;">
+        ← 基于RYU restful api实现的VLAN网络虚拟化
+    </a>
+    
+    
+    <a class="pull-right" href="/2017/03/12/云计算基础概念/">
+        云计算基础概念 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+
+<div class="ds-thread" data-thread-key="2017/03/14/基于OVS的VLAN虚拟化简易实践方案/" data-title="基于OVS的VLAN虚拟化简易实践方案" data-url="http://yoursite.com/2017/03/14/基于OVS的VLAN虚拟化简易实践方案/"></div>
+<script type="text/javascript">
+	var duoshuoQuery = {short_name:"peiqiaoWang"};
+	window.addEventListener('load', function(){
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0]
+			|| document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+	});
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By John Doe. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/peiqiaoWang" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/1659192742/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      (function(){
+        console.log('font');
+        var getCss = function(path) {
+          var head = document.getElementsByTagName('head')[0];
+          link = document.createElement('link');
+          link.href = path;
+          link.rel = 'stylesheet';
+          link.type = 'text/css';
+          head.appendChild(link);
+        };
+        getCss('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+        getCss('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+      })();
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
