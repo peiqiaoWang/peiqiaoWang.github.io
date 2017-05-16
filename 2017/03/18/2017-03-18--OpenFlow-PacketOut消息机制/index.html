@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>OpenFlow PacketOut消息机制 | 考拉小无</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="考拉小无">
+    <meta name="author" content="John Doe">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="考拉小无" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">SDN</a></li>
+                    
+                        <li><a href="/tags/PHP/index.html" target="_BLANK" class="animsition-link">PHP</a></li>
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">Python</a></li>
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">生活简章</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">主题来源Kieran</a></li>
+                    
+                    <li><a href="http://www.cnblogs.com/wpqwpq" class="animsition-link">考拉小无</a></li>
+                    
+                    <li><a href="https://csming1995.github.io" class="animsition-link">csming1995</a></li>
+                    
+                    <li><a href="https://Wasdns.github.io" class="animsition-link">Wasdns</a></li>
+                    
+                    <li><a href="http://www.cnblogs.com/qq952693358/" class="animsition-link">cnblog Wasdns</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">考拉小无</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/peiqiaoWang" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/1659192742/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2017-03-18T14:44:00.000Z" itemprop="datePublished">
+          2017-03-18
+      </time>
+    
+    
+    | 
+    <a href='/tags/SDN/'>SDN</a>
+    
+    
+</span>
+                <h1>OpenFlow PacketOut消息机制</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于最近实验的进行，遇到一个比较棘手的问题，就是利用控制器主动发送packet消息的问题，期间遇到一些问题，后来在RYU群中得到群友<strong>左木</strong>的帮助成功解决，记录一下这些问题，由于是昨天的问题，就没有把错误截图给截下来了（不想在重做一遍了）。</p>
+<h2 id="实验工具"><a href="#实验工具" class="headerlink" title="实验工具"></a>实验工具</h2><ul>
+<li>RYU</li>
+<li>mininet</li>
+<li>wireshark</li>
+</ul>
+<h2 id="问题描述与解决"><a href="#问题描述与解决" class="headerlink" title="问题描述与解决"></a>问题描述与解决</h2><p><a href="http://ryu.readthedocs.io/en/latest/ofproto_v1_3_ref.html" target="_blank" rel="external"><strong>ryu指南中的packetout消息(OF1.3)</strong></a></p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><div class="line"><span class="keyword">class</span> ryu.ofproto.ofproto_v1_3_parser.OFPPacketOut(datapath, buffer_id=<span class="keyword">None</span>, in_port=<span class="keyword">None</span>, actions=<span class="keyword">None</span>, <span class="keyword">data</span>=<span class="keyword">None</span>, actions_len=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<p>Packet-Out message</p>
+<p>The controller uses this message to send a packet out throught the switch.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>buffer_id</td>
+<td>ID assigned by datapath (OFP_NO_BUFFER if none)</td>
+</tr>
+<tr>
+<td>in_port</td>
+<td>Packet’s input port or <code>OFPP_CONTROLLER</code></td>
+</tr>
+<tr>
+<td>actions</td>
+<td>list of OpenFlow action class</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Packet data of a binary type value or an instances of packet.Packet.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<figure class="highlight elm"><table><tr><td class="code"><pre><div class="line"><span class="title">def</span> send_packet_out(self, datapath, buffer_id, in_<span class="keyword">port</span>):</div><div class="line">    ofp = datapath.ofproto</div><div class="line">    ofp_parser = datapath.ofproto_parser</div><div class="line"></div><div class="line">    actions = [ofp_parser.OFPActionOutput(ofp.<span class="type">OFPP_FLOOD</span>, 0)]</div><div class="line">    req = ofp_parser.OFPPacketOut(datapath, buffer_id,</div><div class="line">                                  in_port, actions)</div><div class="line">    datapath.send_msg(req)</div></pre></td></tr></table></figure>
+<hr>
+<p>于是我照猫画虎的来下来如下代码：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line"><span class="attr">ofp</span> = datapath.ofproto</div><div class="line"><span class="attr">ofp_parser</span> = datapath.ofproto_parser</div><div class="line"><span class="attr">actions</span> = [ofp_parser.OFPActionOutput(<span class="attr">port=1)]</span></div><div class="line"><span class="attr">req</span> = ofp_parser.OFPPacketOut(<span class="attr">datapath=datapath,</span> <span class="attr">buffer_id=ofp.OFP_NO_BUFFER,</span> <span class="attr">in_port=1,</span></div><div class="line">                              <span class="attr">actions=actions)</span></div><div class="line">datapath.send_msg(req)</div></pre></td></tr></table></figure>
+<p>这样下来运行也没有错误，可是就是<strong>无法在端口一抓到包</strong>，心生疑惑又在<strong>控制器的那一端抓了一次</strong>，结果抓到了这个包。后来在群友耐心指导下，原来是<strong>没加data</strong>下去，所以在端口一无法抓到包。</p>
+<hr>
+<p>于是我就构造了一个arp报文重新发了一次，改了一下代码</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line"><span class="attr">ofp</span> = datapath.ofproto</div><div class="line"><span class="attr">ofp_parser</span> = datapath.ofproto_parser</div><div class="line"><span class="attr">e</span> = ethernet.ethernet(<span class="attr">dst='00:00:00:00:ff:ff',</span></div><div class="line">                      <span class="attr">src='08:60:6e:7f:74:e7',</span></div><div class="line">                      <span class="attr">ethertype=ether.ETH_TYPE_ARP)</span></div><div class="line"></div><div class="line"><span class="attr">a</span> = arp.arp(<span class="attr">hwtype=1,</span> <span class="attr">proto=0x0800,</span> <span class="attr">hlen=6,</span> <span class="attr">plen=4,</span> <span class="attr">opcode=2,</span></div><div class="line">            <span class="attr">src_mac='08:60:6e:7f:74:e7',</span> <span class="attr">src_ip='192.0.2.1',</span></div><div class="line">            <span class="attr">dst_mac='00:00:00:00:00:00',</span> <span class="attr">dst_ip='192.0.2.2')</span></div><div class="line"><span class="attr">p</span> = packet.Packet()</div><div class="line">p.add_protocol(e)</div><div class="line">p.add_protocol(a)</div><div class="line">p.serialize()</div><div class="line"></div><div class="line"><span class="attr">actions</span> = [ofp_parser.OFPActionOutput(<span class="number">1</span>)]</div><div class="line"><span class="attr">req</span> = ofp_parser.OFPPacketOut(<span class="attr">datapath=datapath,</span> <span class="attr">buffer_id=ofp.OFP_NO_BUFFER,</span> <span class="attr">in_port=1,</span></div><div class="line">                              <span class="attr">actions=actions,</span> <span class="attr">data=p)</span></div><div class="line">datapath.send_msg(req)</div></pre></td></tr></table></figure>
+<p>这回确实是抓到了，可是又心生疑惑，我明明有一条流表，为什么这个包不会先匹配一下流表吗？于是又向群友求助，原来是：</p>
+<blockquote>
+<p>Action 是一个行动列表定义交换机如何处理数据包的字段。可包括包修改，组处理和一<br>个输出端口。 一个 OFPT_PACKET_OUT 行动清单消息也可以指定 OFPP_TABLE 保留端口<br>作为输出行动来处理 OpenFlow 流水线中的数据包，从第一个流表开始（见 4.5） 。如果<br>OFPP_TABLE 被指定，in_port 作为查找时流表的入端口。</p>
+</blockquote>
+<p>于是我又改了一下代码，把动作改成output到OFPP_TABLE去</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line"><span class="attr">ofp</span> = datapath.ofproto</div><div class="line"> <span class="attr">ofp_parser</span> = datapath.ofproto_parser</div><div class="line"> <span class="attr">e</span> = ethernet.ethernet(<span class="attr">dst='00:00:00:00:ff:ff',</span></div><div class="line">                       <span class="attr">src='08:60:6e:7f:74:e7',</span></div><div class="line">                       <span class="attr">ethertype=ether.ETH_TYPE_ARP)</span></div><div class="line"></div><div class="line"> <span class="attr">a</span> = arp.arp(<span class="attr">hwtype=1,</span> <span class="attr">proto=0x0800,</span> <span class="attr">hlen=6,</span> <span class="attr">plen=4,</span> <span class="attr">opcode=2,</span></div><div class="line">             <span class="attr">src_mac='08:60:6e:7f:74:e7',</span> <span class="attr">src_ip='192.0.2.1',</span></div><div class="line">             <span class="attr">dst_mac='00:00:00:00:00:00',</span> <span class="attr">dst_ip='192.0.2.2')</span></div><div class="line"> <span class="attr">p</span> = packet.Packet()</div><div class="line"> p.add_protocol(e)</div><div class="line"> p.add_protocol(a)</div><div class="line"> p.serialize()</div><div class="line"> <span class="attr">actions</span> = [ofp_parser.OFPActionOutput(<span class="attr">port=ofp.OFPP_TABLE)]</span></div><div class="line"> <span class="attr">req</span> = ofp_parser.OFPPacketOut(<span class="attr">datapath=datapath,</span> <span class="attr">buffer_id=ofp.OFP_NO_BUFFER,</span> <span class="attr">in_port=1,</span></div><div class="line">                               <span class="attr">actions=actions,</span> <span class="attr">data=p)</span></div><div class="line"> datapath.send_msg(req)</div></pre></td></tr></table></figure>
+<p>这下确实是大功告成了。</p>
+<hr>
+<p>途中也遇到了一个疑惑，buffer_id的作用，相信的可以看这篇<a href="http://www.sdnlab.com/17058.html" target="_blank" rel="external">Openflow细节理解之—Buffer_id篇</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果是OpenFlow消息交互的问题，还是得回归OpenFlow白皮书。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2017/03/21/基于RYU的拓扑发现/" style="float: left;">
+        ← 基于RYU的拓扑发现
+    </a>
+    
+    
+    <a class="pull-right" href="/2017/03/16/OpenStack基础原理/">
+        OpenStack基础原理 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+
+<div class="ds-thread" data-thread-key="2017/03/18/2017-03-18--OpenFlow-PacketOut消息机制/" data-title="OpenFlow PacketOut消息机制" data-url="http://yoursite.com/2017/03/18/2017-03-18--OpenFlow-PacketOut消息机制/"></div>
+<script type="text/javascript">
+	var duoshuoQuery = {short_name:"peiqiaoWang"};
+	window.addEventListener('load', function(){
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0]
+			|| document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+	});
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By John Doe. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/peiqiaoWang" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/1659192742/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      (function(){
+        console.log('font');
+        var getCss = function(path) {
+          var head = document.getElementsByTagName('head')[0];
+          link = document.createElement('link');
+          link.href = path;
+          link.rel = 'stylesheet';
+          link.type = 'text/css';
+          head.appendChild(link);
+        };
+        getCss('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+        getCss('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+      })();
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>

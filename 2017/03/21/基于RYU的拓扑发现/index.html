@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********    -----Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+  <title>基于RYU的拓扑发现 | 考拉小无</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="考拉小无">
+    <meta name="author" content="John Doe">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="考拉小无" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">SDN</a></li>
+                    
+                        <li><a href="/tags/PHP/index.html" target="_BLANK" class="animsition-link">PHP</a></li>
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">Python</a></li>
+                    
+                        <li><a href="" target="_BLANK" class="animsition-link">生活简章</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a href="http://go.kieran.top/" class="animsition-link">主题来源Kieran</a></li>
+                    
+                    <li><a href="http://www.cnblogs.com/wpqwpq" class="animsition-link">考拉小无</a></li>
+                    
+                    <li><a href="https://csming1995.github.io" class="animsition-link">csming1995</a></li>
+                    
+                    <li><a href="https://Wasdns.github.io" class="animsition-link">Wasdns</a></li>
+                    
+                    <li><a href="http://www.cnblogs.com/qq952693358/" class="animsition-link">cnblog Wasdns</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">考拉小无</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/peiqiaoWang" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/1659192742/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2017-03-20T16:00:00.000Z" itemprop="datePublished">
+          2017-03-21
+      </time>
+    
+    
+    | 
+    <a href='/tags/SDN/'>SDN</a>
+    
+    
+</span>
+                <h1>基于RYU的拓扑发现</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本次实验是一个基于RYU的拓扑发现功能。参考了<a href="https://github.com/muzixing/ryu/blob/master/ryu/app/network_awareness/network_awareness.py" target="_blank" rel="external">呈神的实现方式</a>，并加了一些自己实现方式，做了一些数据结构的改动。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
+<li><p>link_to_port 字典 </p>
+<p>有两种关系：</p>
+<p>一是记录交换机与交换机之间的链接 （src_dpid, src_port_no) =&gt; (dst_dpid, dst_port_no)</p>
+<p>一是记录交换机与控制器之间的链接   (dpid, port_no) =&gt;(mac, ip)</p>
+</li>
+<li><p>host_or_switch 字典</p>
+<p>用来记录交换机连的端口连接的为何种类型的设备 （dpid, port_no) =&gt; </p>
+<p>1：交换机</p>
+<p>2：主机</p>
+<p>其他：没有连接</p>
+</li>
+<li><p>switch_port_table 字段</p>
+<p>用来记录交换机的端口 , (dpid) =&gt; [1,2,….]</p>
+</li>
+</ul>
+<h2 id="相关API的使用"><a href="#相关API的使用" class="headerlink" title="相关API的使用"></a>相关API的使用</h2><p>API是基于ryu源代码topology/switches下的使用，并使用了三个api</p>
+<ul>
+<li>get_switch 获取交换机列表</li>
+<li>get_link  获取链路信息</li>
+<li>get_host  获取主机信息</li>
+</ul>
+<h2 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码"></a>实验代码</h2><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">#-*- coding: <span class="type">UTF</span>-<span class="number">8</span> -*-</div><div class="line"></div><div class="line"><span class="keyword">import</span> logging</div><div class="line">from ryu.base <span class="keyword">import</span> app_manager</div><div class="line"></div><div class="line">from ryu.controller <span class="keyword">import</span> ofp_event</div><div class="line">from ryu.controller.handler <span class="keyword">import</span> MAIN_DISPATCHER, DEAD_DISPATCHER</div><div class="line">from ryu.controller.handler <span class="keyword">import</span> CONFIG_DISPATCHER</div><div class="line">from ryu.controller.handler <span class="keyword">import</span> set_ev_cls</div><div class="line">from ryu.ofproto <span class="keyword">import</span> ofproto_v1_0</div><div class="line">from ryu.ofproto <span class="keyword">import</span> ofproto_v1_2</div><div class="line">from ryu.ofproto <span class="keyword">import</span> ofproto_v1_3</div><div class="line">from ryu.lib.packet <span class="keyword">import</span> packet</div><div class="line">from ryu.lib <span class="keyword">import</span> hub</div><div class="line">from ryu.topology <span class="keyword">import</span> event, switches</div><div class="line">from ryu.topology.api <span class="keyword">import</span> get_switch, get_link, get_host</div><div class="line">from ryu <span class="keyword">import</span> cfg</div><div class="line"></div><div class="line"><span class="type">CONF</span> = cfg.<span class="type">CONF</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">test_wpq</span>(<span class="title">app_manager</span>.<span class="title">RyuApp</span>):</span></div><div class="line"></div><div class="line">    <span class="title">OFP_VERSIONS</span> = [<span class="title">ofproto_v1_0</span>.<span class="title">OFP_VERSION</span>,</div><div class="line">                    <span class="title">ofproto_v1_3</span>.<span class="title">OFP_VERSION</span>]</div><div class="line"></div><div class="line">    <span class="title">def</span> <span class="title">__init__</span>(<span class="title">self</span>, *<span class="title">args</span>, **<span class="title">kwargs</span>):</div><div class="line">        <span class="title">super</span>(<span class="title">test_wpq</span>, <span class="title">self</span>).<span class="title">__init__</span>(*<span class="title">args</span>, **<span class="title">kwargs</span>)</div><div class="line">        <span class="title">self</span>.<span class="title">topology_api_app</span> = <span class="title">self</span></div><div class="line">        <span class="title">self</span>.<span class="title">link_to_port</span> = &#123;&#125;</div><div class="line">        <span class="keyword">self</span>.host_or_switch = &#123;&#125;</div><div class="line">        <span class="keyword">self</span>.switch_port_table = &#123;&#125;</div><div class="line">        <span class="keyword">self</span>.name = <span class="string">"wpq"</span></div><div class="line">        <span class="keyword">self</span>.discover_thread = hub.spawn(<span class="keyword">self</span>._discover_links)</div><div class="line"></div><div class="line">    #<span class="type">A</span> thread to output the information of topology</div><div class="line">    def _discover_links(<span class="keyword">self</span>):</div><div class="line">        <span class="keyword">while</span> <span class="type">True</span>:</div><div class="line">            <span class="keyword">self</span>.get_topology(<span class="type">None</span>)</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                <span class="keyword">self</span>.show_topology()</div><div class="line">            except <span class="type">Exception</span> <span class="keyword">as</span> err:</div><div class="line">                <span class="built_in">print</span> <span class="string">"please input pingall in mininet and wait a memment"</span></div><div class="line">            hub.sleep(<span class="number">5</span>)</div><div class="line"></div><div class="line">    #add entry of table-miss</div><div class="line">    @set_ev_cls(ofp_event.<span class="type">EventOFPSwitchFeatures</span>, <span class="type">CONFIG_DISPATCHER</span>)</div><div class="line">    def switch_feature_handle(<span class="keyword">self</span>, ev):</div><div class="line">        msg = ev.msg</div><div class="line">        <span class="built_in">print</span> msg</div><div class="line">        datapath = msg.datapath</div><div class="line">        ofproto = datapath.ofproto</div><div class="line">        parser = datapath.ofproto_parser</div><div class="line">        <span class="keyword">self</span>.logger.info(<span class="string">"switch %s is connected"</span>, datapath.id)</div><div class="line">        match = parser.<span class="type">OFPMatch</span>()</div><div class="line">        actions = [parser.<span class="type">OFPActionOutput</span>(ofproto.<span class="type">OFPP_CONTROLLER</span>)]</div><div class="line">        <span class="keyword">self</span>.add_flow(datapath=datapath, priority=<span class="number">0</span>, actions=actions, match=match)</div><div class="line"></div><div class="line">    def add_flow(<span class="keyword">self</span>, datapath, priority, actions, match, idle_timeout=<span class="number">0</span>, hard_timeout=<span class="number">0</span>):</div><div class="line">        ofp = datapath.ofproto</div><div class="line">        parser = datapath.ofproto_parser</div><div class="line"></div><div class="line">        inst = [parser.<span class="type">OFPInstructionActions</span>(ofp.<span class="type">OFPIT_APPLY_ACTIONS</span>,</div><div class="line">                                             actions)]</div><div class="line"></div><div class="line">        mod = parser.<span class="type">OFPFlowMod</span>(datapath=datapath, priority=priority,</div><div class="line">                                idle_timeout=idle_timeout,</div><div class="line">                                hard_timeout=hard_timeout,</div><div class="line">                                match=match, instructions=inst)</div><div class="line"></div><div class="line">        datapath.send_msg(mod)</div><div class="line"></div><div class="line">    #fill the port of <span class="keyword">switch</span> imformation</div><div class="line">    def create_map(<span class="keyword">self</span>, switch_list):</div><div class="line">        <span class="keyword">for</span> sw <span class="keyword">in</span> switch_list:</div><div class="line">            dpid = sw.dp.id</div><div class="line">            <span class="keyword">self</span>.switch_port_table.setdefault(dpid, <span class="keyword">set</span>())</div><div class="line"></div><div class="line">            <span class="keyword">for</span> p <span class="keyword">in</span> sw.ports:</div><div class="line">                <span class="keyword">self</span>.switch_port_table[dpid].add(p.port_no)</div><div class="line"></div><div class="line">        # <span class="built_in">print</span> <span class="string">"--------------交换机端口情况---------------"</span></div><div class="line">        # <span class="built_in">print</span> <span class="keyword">self</span>.switch_port_table</div><div class="line"></div><div class="line">    #fill the link information</div><div class="line">    def create_link_port(<span class="keyword">self</span>, link_list, host_list):</div><div class="line">        <span class="keyword">for</span> link <span class="keyword">in</span> link_list:</div><div class="line">            src = link.src</div><div class="line">            dst = link.dst</div><div class="line">            <span class="keyword">self</span>.link_to_port[(src.dpid, src.port_no)] = (dst.dpid, dst.port_no)</div><div class="line">            <span class="keyword">self</span>.link_to_port[(dst.dpid, dst.port_no)] = (src.dpid, src.port_no)</div><div class="line">            <span class="keyword">self</span>.host_or_switch[(src.dpid, src.port_no)] = <span class="number">1</span></div><div class="line">            <span class="keyword">self</span>.host_or_switch[(dst.dpid, dst.port_no)] = <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">for</span> host <span class="keyword">in</span> host_list:</div><div class="line">            port = host.port</div><div class="line">            <span class="keyword">self</span>.link_to_port[(port.dpid, port.port_no)] = (host.mac, host.ipv4)</div><div class="line">            <span class="keyword">self</span>.host_or_switch[(port.dpid, port.port_no)] = <span class="number">2</span></div><div class="line"></div><div class="line">    #packein message handler (it <span class="keyword">is</span> useless <span class="keyword">in</span> this function)</div><div class="line">    @set_ev_cls(ofp_event.<span class="type">EventOFPPacketIn</span>, <span class="type">MAIN_DISPATCHER</span>)</div><div class="line">    def packetin_handler(<span class="keyword">self</span>, ev):</div><div class="line">        # <span class="built_in">print</span> ev.msg</div><div class="line">        msg = ev.msg</div><div class="line">        pkt = packet.<span class="type">Packet</span>(msg.data)</div><div class="line">        # <span class="built_in">print</span> pkt.get_protocols</div><div class="line">        dpid = msg.datapath.id</div><div class="line">        port = msg.match['in_port']</div><div class="line">        <span class="keyword">self</span>.get_topology(<span class="type">None</span>)</div><div class="line"></div><div class="line"></div><div class="line">    events = [event.<span class="type">EventSwitchEnter</span>,</div><div class="line">              event.<span class="type">EventSwitchLeave</span>, event.<span class="type">EventPortAdd</span>,</div><div class="line">              event.<span class="type">EventPortDelete</span>, event.<span class="type">EventPortModify</span>,</div><div class="line">              event.<span class="type">EventLinkAdd</span>, event.<span class="type">EventLinkDelete</span>]</div><div class="line">    #monitor the change <span class="keyword">in</span> link information</div><div class="line">    @set_ev_cls(events)</div><div class="line">    def get_topology(<span class="keyword">self</span>, ev):</div><div class="line">        <span class="keyword">self</span>.create_map(get_switch(<span class="keyword">self</span>.topology_api_app))</div><div class="line">        # <span class="built_in">print</span> get_host(<span class="keyword">self</span>.topology_api_app)</div><div class="line">        # <span class="built_in">print</span> type(get_host(<span class="keyword">self</span>.topology_api_app))</div><div class="line">        <span class="keyword">self</span>.create_link_port(get_link(<span class="keyword">self</span>.topology_api_app), get_host(<span class="keyword">self</span>.topology_api_app))</div><div class="line">        # <span class="keyword">self</span>.show_topology()</div><div class="line"></div><div class="line"></div><div class="line">    #some command line output typesetting</div><div class="line">    def show_topology(<span class="keyword">self</span>):</div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="built_in">print</span> <span class="string">""</span></div><div class="line">        <span class="built_in">print</span> <span class="string">""</span></div><div class="line">        <span class="built_in">print</span> <span class="string">""</span></div><div class="line">        <span class="built_in">print</span> <span class="string">"----------------"</span> * <span class="number">2</span>, <span class="string">"physical topology"</span>, <span class="string">"----------------"</span> * <span class="number">6</span></div><div class="line">        <span class="keyword">for</span> dpid <span class="keyword">in</span> <span class="keyword">self</span>.switch_port_table.keys():</div><div class="line">            <span class="built_in">print</span> <span class="string">"switch%d ----------dpid---------- "</span> % i,</div><div class="line">            <span class="keyword">for</span> port_no <span class="keyword">in</span> <span class="keyword">self</span>.switch_port_table[dpid]:</div><div class="line">                <span class="built_in">print</span> <span class="string">"-----------port %s-----------"</span> % port_no,</div><div class="line">            <span class="built_in">print</span> <span class="string">""</span></div><div class="line">            <span class="built_in">print</span> <span class="string">"        "</span>, <span class="string">"%11d"</span> % dpid ,<span class="string">"%12s"</span> % <span class="string">" "</span>,</div><div class="line">            # # <span class="built_in">print</span> <span class="keyword">self</span>.switch_port_table[dpid]</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                <span class="keyword">for</span> port_no <span class="keyword">in</span> <span class="keyword">self</span>.switch_port_table[dpid]:</div><div class="line">                    <span class="keyword">if</span> <span class="keyword">self</span>.host_or_switch[(dpid, port_no)] == <span class="number">1</span>:</div><div class="line">                        <span class="built_in">print</span> <span class="string">"%10s"</span> % <span class="string">"switch"</span>, <span class="string">"%d"</span> % <span class="keyword">self</span>.link_to_port[(dpid, port_no)][<span class="number">0</span>], <span class="string">"     port %d"</span> % <span class="keyword">self</span>.link_to_port[(dpid, port_no)][<span class="number">1</span>], <span class="string">"  "</span>,</div><div class="line">                    elif <span class="keyword">self</span>.host_or_switch[(dpid, port_no)] == <span class="number">2</span>:</div><div class="line">                        <span class="built_in">print</span> <span class="string">"%s"</span> % <span class="string">"host"</span>, <span class="string">"mac: %s"</span> % <span class="keyword">self</span>.link_to_port[(dpid, port_no)][<span class="number">0</span>],</div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        <span class="built_in">print</span> <span class="string">"%28s"</span> % <span class="string">"None"</span></div><div class="line"></div><div class="line">                <span class="built_in">print</span> <span class="string">""</span></div><div class="line">                <span class="built_in">print</span> <span class="string">"        "</span>, <span class="string">"%23s"</span> % <span class="string">" "</span>,</div><div class="line">                <span class="keyword">for</span> port_no <span class="keyword">in</span> <span class="keyword">self</span>.switch_port_table[dpid]:</div><div class="line">                    <span class="keyword">if</span> <span class="keyword">self</span>.host_or_switch[(dpid, port_no)] == <span class="number">2</span>:</div><div class="line">                        <span class="built_in">print</span> <span class="string">" ipv4 :"</span>, <span class="keyword">self</span>.link_to_port[(dpid, port_no)][<span class="number">1</span>],</div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        <span class="built_in">print</span> <span class="string">"%28s"</span> % <span class="string">" "</span>,</div><div class="line">                <span class="built_in">print</span></div><div class="line">            except <span class="type">Exception</span> <span class="keyword">as</span> error:</div><div class="line">                <span class="built_in">print</span> <span class="string">"please input pingall in mininet and wait a momment until it's finished"</span></div><div class="line"></div><div class="line">            i = i + <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="built_in">print</span> <span class="string">"------------------"</span> * <span class="number">8</span></div><div class="line">        <span class="built_in">print</span> <span class="string">""</span></div><div class="line">        <span class="built_in">print</span> <span class="string">""</span></div><div class="line">        <span class="built_in">print</span> <span class="string">""</span></div></pre></td></tr></table></figure>
+<h2 id="细节点"><a href="#细节点" class="headerlink" title="细节点"></a>细节点</h2><p>这也是我调了半天的一个bug，使用<code>hub.spawn</code>与<code>hub.sleep</code>配合的函数，应该可以达到停几秒休息一次的作用，尝试很多无果，后来自己随便建了一个没有消息处理机制的函数进行测试，发现其却能正常运行。究其原因，后面原来是自己<strong>没有异常处理</strong>。异常处理很重要！！！</p>
+<h2 id="实验效果图"><a href="#实验效果图" class="headerlink" title="实验效果图"></a>实验效果图</h2><p><img src="http://images2015.cnblogs.com/blog/990007/201703/990007-20170321005324830-2017535838.png" alt="topology"></p>
+<h2 id="实验缺陷"><a href="#实验缺陷" class="headerlink" title="实验缺陷"></a>实验缺陷</h2><p>对于不同的终端可能适配不一样，尽量放大到全屏看的比较直观，如果设备多了，这个显示依然是一片模糊，后期将加入一个做成json，做成web可视化</p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>这个程序有一大部分得感谢呈神的参考，还有其他部分也是自己对python的一些类似循环，字典的一些应用，懂得去debug，对python不会那么陌生。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2017/03/22/SDN开源项目以及组织机构/" style="float: left;">
+        ← SDN开源项目以及组织机构
+    </a>
+    
+    
+    <a class="pull-right" href="/2017/03/18/2017-03-18--OpenFlow-PacketOut消息机制/">
+        OpenFlow PacketOut消息机制 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+
+<div class="ds-thread" data-thread-key="2017/03/21/基于RYU的拓扑发现/" data-title="基于RYU的拓扑发现" data-url="http://yoursite.com/2017/03/21/基于RYU的拓扑发现/"></div>
+<script type="text/javascript">
+	var duoshuoQuery = {short_name:"peiqiaoWang"};
+	window.addEventListener('load', function(){
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0]
+			|| document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+	});
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By John Doe. All Rights Reserved.
+                </p>
+                <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/peiqiaoWang" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/1659192742/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/jquery.flexslider-min.js"></script><!-- Flexslider plugin -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<!-- Initiate flexslider plugin -->
+<script type="text/javascript">
+    $(document).ready(function($) {
+      (function(){
+        console.log('font');
+        var getCss = function(path) {
+          var head = document.getElementsByTagName('head')[0];
+          link = document.createElement('link');
+          link.href = path;
+          link.rel = 'stylesheet';
+          link.type = 'text/css';
+          head.appendChild(link);
+        };
+        getCss('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+        getCss('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+      })();
+      $('.flexslider').flexslider({
+        animation: "fade",
+        prevText: "",
+        nextText: "",
+        directionNav: true
+      });
+    });
+</script>
+
+</body>
+</html>
